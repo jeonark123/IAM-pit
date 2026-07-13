@@ -391,3 +391,22 @@ body.dark-mode .profile-info strong {
         gap: 1rem;
     }
 }
+
+/* 2단 레이아웃 스타일 */
+.journey-container {
+    display: flex;
+    gap: 2rem;
+}
+.journey-left {
+    flex: 1;
+}
+.journey-right {
+    flex: 1.5; /* 타임라인이 조금 더 길어서 비중을 높임 */
+}
+
+/* 모바일일 때는 다시 1단으로(위아래로) 변경 */
+@media (max-width: 768px) {
+    .journey-container {
+        flex-direction: column;
+    }
+}
