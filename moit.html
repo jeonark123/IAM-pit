@@ -88,9 +88,27 @@
         }
 
         /* 모바일 반응형 */
+        /* 모바일 반응형 완벽 대응 */
         @media (max-width: 600px) {
+            /* 1. 모바일에서는 화면을 넓게 쓰도록 바깥 여백 줄이기 */
+            .gallery-container {
+                padding: 1rem; 
+            }
+            
+            /* 2. 글자가 깨지지 않도록 제목 크기 줄이기 */
+            .gallery-header h2 {
+                font-size: 1.5rem; 
+            }
+            
+            /* 3. 사진 카드를 1열로 꽉 차게 배치하고 간격 조정 */
             .gallery-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem; 
+            }
+            
+            /* 4. 카드 내부 텍스트 여백 최적화 */
+            .gallery-caption {
+                padding: 1.2rem;
             }
         }
     </style>
