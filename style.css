@@ -1,0 +1,150 @@
+/* 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* 상단 스크롤 진행률 바 */
+.progress-container {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 5px;
+    background: rgba(0,0,0,0.1);
+}
+.progress-bar {
+    height: 5px;
+    background: #2b8a3e;
+    width: 0%;
+    transition: width 0.1s;
+}
+
+/* 헤더 스타일 */
+header {
+    background-color: #212529;
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* 다크모드 전환 버튼 스타일 */
+.theme-btn {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+.theme-btn:hover {
+    background: white;
+    color: #212529;
+}
+
+/* 메인 컨테이너 */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 섹션 공통 스타일 */
+section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h2 {
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: #2b8a3e;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+/* 버튼 기본 스타일 */
+.btn {
+    background-color: #2b8a3e;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background-color: #1e6c2f;
+}
+
+.tag {
+    display: inline-block;
+    background: #e9ecef;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* 다크모드 스타일 클래스 */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode section {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(255,255,255,0.05);
+}
+body.dark-mode h2 {
+    border-bottom-color: #333;
+    color: #4dabf7;
+}
+body.dark-mode .tag {
+    background-color: #333;
+    color: #e0e0e0;
+}
+body.dark-mode .btn {
+    background-color: #4dabf7;
+}
+body.dark-mode .btn:hover {
+    background-color: #3b8cd9;
+}
+body.dark-mode .progress-bar {
+    background: #4dabf7;
+}
+
+/* 모바일 친화적 (반응형) */
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+    section {
+        padding: 1.5rem;
+    }
+    header h1 {
+        font-size: 1.5rem;
+    }
+}
