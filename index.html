@@ -113,14 +113,25 @@
         }
         window.onload = typeWriter;
 
-        // 2. 다크모드 / 라이트모드 전환
+      // 2. 다크모드 / 라이트모드 전환 (localStorage 연동 적용)
         const themeToggle = document.getElementById('themeToggle');
+
+        // 페이지가 열릴 때, 이전에 다크모드를 켰던 기록이 있는지 확인!
+        if (localStorage.getItem('myTheme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️ 라이트모드';
+        }
+
+        // 버튼을 누를 때마다 기록 갱신하기
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
+            
             if (document.body.classList.contains('dark-mode')) {
                 themeToggle.textContent = '☀️ 라이트모드';
+                localStorage.setItem('myTheme', 'dark'); // 다크모드 상태 저장
             } else {
                 themeToggle.textContent = '🌙 다크모드';
+                localStorage.setItem('myTheme', 'light'); // 라이트모드 상태 저장
             }
         });
 

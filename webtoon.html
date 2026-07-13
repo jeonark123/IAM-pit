@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- 갤러리 페이지에도 파티클 캔버스 유지 -->
+    <!-- 배경 파티클 캔버스 -->
     <canvas id="bg-canvas"></canvas>
 
     <div class="gallery-container">
@@ -73,8 +73,13 @@
         </div>
     </div>
 
-    <!-- 배경 파티클 애니메이션 스크립트 -->
     <script>
+        // 💡 핵심 추가: 페이지가 열릴 때 다크모드 상태 복구
+        if (localStorage.getItem('myTheme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // 배경 파티클 애니메이션 로직
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -113,6 +118,7 @@
                 ctx.fill();
             }
         }
+
         function initParticles() {
             particlesArray = [];
             let numberOfParticles = (canvas.width * canvas.height) / 9000; 
@@ -120,6 +126,7 @@
                 particlesArray.push(new Particle());
             }
         }
+
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); 
             for (let i = 0; i < particlesArray.length; i++) {
@@ -128,6 +135,7 @@
             }
             requestAnimationFrame(animateParticles); 
         }
+
         initParticles();
         animateParticles();
     </script>
