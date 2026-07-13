@@ -354,3 +354,40 @@ body.dark-mode .gallery-caption h3 {
         padding: 1.2rem;
     }
 }
+
+/* ----------------------------------
+   추가된 프로필 & 수상내역 스타일
+   ---------------------------------- */
+
+.profile-grid {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.profile-info strong {
+    color: #2b8a3e;
+}
+
+.award-list {
+    list-style: none;
+    padding: 0;
+}
+
+.award-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* 다크모드 대응 */
+body.dark-mode .profile-info strong {
+    color: #4dabf7;
+}
+
+/* 모바일 화면 대응 (가로가 좁아지면 세로로 배치) */
+@media (max-width: 600px) {
+    .profile-grid {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
