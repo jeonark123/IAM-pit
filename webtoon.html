@@ -4,113 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>웹툰 추천 및 요약 서비스 | 프로젝트 상세</title>
-    <!-- 기존 CSS 파일을 그대로 가져와서 테마 유지 -->
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* 갤러리 전용 추가 스타일 */
-        .gallery-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .header-action {
-            margin-bottom: 2rem;
-        }
-
-        .gallery-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .gallery-header h2 {
-            border: none;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-        }
-
-        .gallery-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .gallery-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        }
-
-        .gallery-card img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-bottom: 1px solid #eee;
-        }
-
-        .gallery-caption {
-            padding: 1.5rem;
-        }
-
-        .gallery-caption h3 {
-            margin-top: 0;
-            color: #2b8a3e;
-            font-size: 1.2rem;
-        }
-
-        .gallery-caption p {
-            font-size: 0.95rem;
-            color: #555;
-            margin-top: 0.5rem;
-            line-height: 1.5;
-        }
-
-        /* 다크모드 대응 */
-        body.dark-mode .gallery-card {
-            background: #1e1e1e;
-            box-shadow: 0 4px 6px rgba(255,255,255,0.05);
-        }
-        body.dark-mode .gallery-card img {
-            border-bottom: 1px solid #333;
-        }
-        body.dark-mode .gallery-caption p {
-            color: #aaa;
-        }
-
-        /* 모바일 반응형 */
-       /* 모바일 반응형 완벽 대응 */
-        @media (max-width: 600px) {
-            /* 1. 모바일에서는 화면을 넓게 쓰도록 바깥 여백 줄이기 */
-            .gallery-container {
-                padding: 1rem; 
-            }
-            
-            /* 2. 글자가 깨지지 않도록 제목 크기 줄이기 */
-            .gallery-header h2 {
-                font-size: 1.5rem; 
-            }
-            
-            /* 3. 사진 카드를 1열로 꽉 차게 배치하고 간격 조정 */
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem; 
-            }
-            
-            /* 4. 카드 내부 텍스트 여백 최적화 */
-            .gallery-caption {
-                padding: 1.2rem;
-            }
-        }
-    </style>
 </head>
 <body>
+
+    <!-- 갤러리 페이지에도 파티클 캔버스 유지 -->
+    <canvas id="bg-canvas"></canvas>
 
     <div class="gallery-container">
         <!-- 뒤로가기 버튼 -->
@@ -124,7 +23,6 @@
         </div>
 
         <div class="gallery-grid">
-            <!-- 1. 추천 메인 화면 -->
             <div class="gallery-card">
                 <img src="메인 1.png" alt="웹툰 추천 메인">
                 <div class="gallery-caption">
@@ -133,7 +31,6 @@
                 </div>
             </div>
 
-            <!-- 2. 요약 메인 화면 -->
             <div class="gallery-card">
                 <img src="메인2.png" alt="웹툰 요약 메인">
                 <div class="gallery-caption">
@@ -142,7 +39,6 @@
                 </div>
             </div>
 
-            <!-- 3. 프롬프트 및 태그 추출 -->
             <div class="gallery-card">
                 <img src="추천 1.png" alt="AI 태그 추출">
                 <div class="gallery-caption">
@@ -151,7 +47,6 @@
                 </div>
             </div>
 
-            <!-- 4. 추천 결과 카드 -->
             <div class="gallery-card">
                 <img src="추천2.png" alt="추천 결과 화면">
                 <div class="gallery-caption">
@@ -160,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- 5. 요약 모달 -->
             <div class="gallery-card">
                 <img src="요약 1.png" alt="요약 검색 모달">
                 <div class="gallery-caption">
@@ -169,7 +63,6 @@
                 </div>
             </div>
 
-            <!-- 6. 요약 결과 -->
             <div class="gallery-card">
                 <img src="요약2.png" alt="요약 결과 텍스트">
                 <div class="gallery-caption">
@@ -180,5 +73,63 @@
         </div>
     </div>
 
+    <!-- 배경 파티클 애니메이션 스크립트 -->
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            initParticles(); 
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5; 
+                this.speedX = Math.random() * 0.4 - 0.2; 
+                this.speedY = Math.random() * 0.4 - 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                ctx.fillStyle = isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(43, 138, 62, 0.15)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 9000; 
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles); 
+        }
+        initParticles();
+        animateParticles();
+    </script>
 </body>
 </html>

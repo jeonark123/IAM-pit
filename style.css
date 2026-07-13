@@ -13,6 +13,19 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* ----------------------------------
+   배경 파티클(점) 캔버스 스타일
+   ---------------------------------- */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
 /* 상단 스크롤 진행률 바 */
 .progress-container {
     position: fixed;
@@ -76,7 +89,7 @@ header {
     padding: 2rem;
 }
 
-/* 섹션 공통 스타일 & 애니메이션 (호버 시 떠오르는 효과) */
+/* 섹션 공통 스타일 */
 section {
     background: white;
     padding: 2rem;
@@ -102,19 +115,15 @@ h3 {
     margin-top: 1rem;
 }
 
-/* ----------------------------------
-   프로젝트 제목 링크 스타일
-   ---------------------------------- */
+/* 프로젝트 제목 링크 스타일 */
 .title-link {
-    text-decoration: none; /* 기본 밑줄 제거 */
-    color: inherit; /* 원래 제목 색상 유지 */
+    text-decoration: none;
+    color: inherit;
     transition: color 0.2s;
 }
-
 .title-link:hover {
-    color: #2b8a3e; /* 라이트모드 마우스 오버 색상 */
+    color: #2b8a3e;
 }
-
 
 /* 타임라인 디자인 */
 .timeline {
@@ -197,36 +206,93 @@ h3 {
 }
 
 /* ----------------------------------
-   다크모드 스타일 클래스
+   갤러리 전용 스타일 (웹툰, 모잇 페이지)
+   ---------------------------------- */
+.gallery-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+.header-action {
+    margin-bottom: 2rem;
+}
+.gallery-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.gallery-header h2 {
+    border: none;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+.gallery-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.gallery-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.gallery-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+.gallery-caption {
+    padding: 1.5rem;
+}
+.gallery-caption h3 {
+    margin-top: 0;
+    color: #2b8a3e;
+    font-size: 1.2rem;
+}
+.gallery-caption p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+
+/* ----------------------------------
+   다크모드 스타일 클래스 통합
    ---------------------------------- */
 body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
 }
-body.dark-mode section {
+body.dark-mode section, 
+body.dark-mode .gallery-card {
     background-color: #1e1e1e;
     box-shadow: 0 4px 6px rgba(255,255,255,0.02);
 }
-body.dark-mode section:hover {
+body.dark-mode section:hover, 
+body.dark-mode .gallery-card:hover {
     box-shadow: 0 10px 20px rgba(255,255,255,0.08);
 }
 body.dark-mode h2 {
     border-bottom-color: #333;
     color: #4dabf7;
 }
-
-/* 다크모드 프로젝트 제목 링크 호버 */
 body.dark-mode .title-link:hover {
     color: #4dabf7;
 }
-
 body.dark-mode .timeline {
     border-color: #4dabf7;
 }
 body.dark-mode .timeline-item::before {
     background: #4dabf7;
 }
-body.dark-mode .timeline-date {
+body.dark-mode .timeline-date, 
+body.dark-mode .gallery-caption p {
     color: #aaa;
 }
 body.dark-mode .tag {
@@ -250,8 +316,16 @@ body.dark-mode .guestbook-input {
 body.dark-mode .guestbook-list li {
     background: #2a2a2a;
 }
+body.dark-mode .gallery-card img {
+    border-bottom: 1px solid #333;
+}
+body.dark-mode .gallery-caption h3 {
+    color: #4dabf7;
+}
 
-/* 모바일 친화적 (반응형) */
+/* ----------------------------------
+   모바일 반응형 완벽 대응
+   ---------------------------------- */
 @media (max-width: 600px) {
     .container {
         padding: 1rem;
@@ -264,5 +338,19 @@ body.dark-mode .guestbook-list li {
     }
     .guestbook-form {
         flex-direction: column;
+    }
+    /* 갤러리 모바일 대응 */
+    .gallery-container {
+        padding: 1rem; 
+    }
+    .gallery-header h2 {
+        font-size: 1.5rem; 
+    }
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem; 
+    }
+    .gallery-caption {
+        padding: 1.2rem;
     }
 }
